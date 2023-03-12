@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">alarmeNoturno</string>
+    <string name="alarmMessage">Alarme colocado para %1$02d:%2$02d</string>
+    <string name="notSet">Alarme não ativo</string>
+</resources>
