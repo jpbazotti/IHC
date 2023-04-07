@@ -9,8 +9,10 @@ import android.os.Bundle
 import android.os.VibratorManager
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -21,11 +23,12 @@ import java.util.*
 lateinit var alarmSetButton: Button
 lateinit var alarmCancelButton: Button
 lateinit var alarmACKButton: Button
+lateinit var addPhoneButton: Button
 lateinit var alarmTextView: TextView
+lateinit var phoneEditText: EditText
 lateinit var timePicker: TimePicker
-private lateinit var alarmIntent: PendingIntent
-private var alarmMgr: AlarmManager? = null
-var ringedOnce =false
+var list = arrayOf("1","2","3","4","5")
+var count =0
 class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         alarmACKButton=findViewById(R.id.ACK)
         alarmTextView=findViewById(R.id.alarmText)
         timePicker = findViewById(R.id.timePicker)
+        phoneEditText = findViewById(R.id.editTextPhone)
+        addPhoneButton = findViewById(R.id.addPhone)
         val al = Alarm()
         alarmSetButton.setOnClickListener{
             var hour = timePicker.hour
@@ -52,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             )
             alarmTextView.text = getString(R.string.alarmMessage,hour,minute)
 
-            al.setAlarm(this,0)
+            al.setAlarm(this,0,list)
 
         }
         alarmCancelButton.setOnClickListener{
@@ -62,6 +67,12 @@ class MainActivity : AppCompatActivity() {
         }
         alarmACKButton.setOnClickListener{
             al.cancelAlarm(this,1)
+
+        }
+        addPhoneButton.setOnClickListener{
+            list[count] = phoneEditText.text.toString()
+            count++
+            Log.d("Alarm Bell", list.joinToString("\n"))
 
         }
 
